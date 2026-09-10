@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>قهوة يوسف | نظام الكاشير</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=Marhey:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app" id="app">
+  <aside class="side">
+    <div class="brand"><b>ي</b><span>قهوة يوسف</span></div>
+    <nav>
+      <button class="nav active" data-page="pos"><i>▦</i> الكاشير</button>
+      <button class="nav" data-page="orders"><i>▤</i> الطلبات <small id="orderBadge">0</small></button>
+      <button class="nav" data-page="menu"><i>☕</i> المنيو</button>
+      <button class="nav" data-page="customers"><i>♙</i> الزبائن</button>
+      <button class="nav" data-page="barista"><i>◉</i> شاشة الباريستا</button>
+      <button class="nav" data-page="inventory"><i>▧</i> المخزون</button>
+      <button class="nav" data-page="shifts"><i>◷</i> الشفتات</button>
+      <hr>
+      <button class="nav" data-page="reports"><i>▥</i> التقارير</button>
+      <button class="nav" data-page="settings"><i>⚙</i> الإعدادات</button>
+    </nav>
+    <div class="shift"><span></span><div><b>شفت الصبح</b><small id="clock">--:--</small></div><button id="closeShift" title="إغلاق الشفت وطباعة التقرير">×</button></div>
+  </aside>
+  <main>
+    <header>
+      <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة">☰</button>
+      <div><p id="today">هلا يوسف،</p><h1 id="pageTitle">يلا ناخذ طلب جديد</h1></div>
+      <div class="header-actions"><button id="theme" title="تبديل الألوان">◐</button><button id="newOrder" class="primary">+ طلب جديد</button><span class="avatar">ي</span></div>
+    </header>
+
+    <section id="pos" class="page shown">
+      <div class="pos-layout">
+        <div class="catalog">
+          <div class="search"><input id="search" placeholder="دور بالمنيو..."><kbd>⌕</kbd></div>
+          <div id="categories" class="chips"></div>
+          <div class="section-heading"><div><p>منيو اليوم</p><h2 id="menuHeading">كل الأشياء الطيبة</h2></div><span id="itemCount"></span></div>
+          <div id="products" class="products"></div>
+        </div>
+        <aside class="cart">
+          <div class="cart-head"><div><p>الطلب الحالي <span id="orderNo">#١٠٤٨</span></p><h2>سلة الطلب</h2></div><button id="clearCart" title="تفريغ السلة">⌫</button></div>
+          <button id="customerBtn" class="customer"><span id="customerInitial">+</span><div><b id="customerName">إضافة زبون</b><small id="customerInfo">حتى نحفظ نقاطه</small></div><i>‹</i></button>
+          <div id="cartItems" class="cart-items"></div>
+          <button id="addCustom" class="add-custom">+ إضافة صنف مفتوح</button>
+          <div class="totals">
+            <div><span>المجموع</span><b id="subtotal">٠ د.ع</b></div>
+            <div><span>خدمة <small>٥٪</small></span><b id="tax">٠ د.ع</b></div>
+            <div class="grand"><span>المطلوب</span><b id="total">٠ د.ع</b></div>
+          </div>
+          <button id="pay" class="pay" disabled>اختار طريقة الدفع <strong id="payAmount"></strong></button>
+        </aside>
+      </div>
+    </section>
+
+    <section id="orders" class="page">
+      <div class="page-card">
+        <div class="section-heading"><div><p>متابعة الشغل</p><h2>الطلبات اليوم</h2></div><button class="outline" id="exportOrders">تنزيل CSV</button></div>
+        <div id="ordersList" class="orders-list"></div>
+      </div>
+    </section>
+
+    <section id="menu" class="page">
+      <div class="page-card">
+        <div class="section-heading"><div><p>إدارة الأصناف</p><h2>منيو القهوة</h2></div><button class="primary" id="addMenuItem">+ إضافة صنف</button></div>
+        <div id="menuManage" class="manage-list"></div>
+      </div>
+    </section>
+
+    <section id="customers" class="page">
+      <div class="page-card">
+        <div class="section-heading"><div><p>علاقتنا بالناس</p><h2>زبائنّا</h2></div><button class="primary" id="addCustomer">+ زبون جديد</button></div>
+        <div id="customersList" class="manage-list"></div>
+      </div>
+    </section>
+
+    <section id="barista" class="page">
+      <div class="page-card">
+        <div class="section-heading"><div><p>طلبات حية</p><h2>شاشة الباريستا</h2></div><button class="outline" id="refreshKitchen">تحديث</button></div>
+        <div id="kitchenBoard" class="kitchen-board"></div>
+      </div>
+    </section>
+
+    <section id="inventory" class="page">
+      <div class="page-card">
+        <div class="section-heading"><div><p>المواد الأساسية</p><h2>المخزون والتنبيهات</h2></div><button class="primary" id="addStock">+ إضافة مادة</button></div>
+        <div id="stockList" class="manage-list"></div>
+      </div>
+    </section>
+
+    <section id="shifts" class="page">
+      <div class="stats">
+        <article><small>بداية الشفت</small><b>٠٨:٠٠</b><span>الكاشير: يوسف</span></article>
+        <article><small>كاش الصندوق</small><b id="cashStat">٠ د.ع</b><span>من عمليات الكاش</span></article>
+        <article><small>عدد الطلبات</small><b id="shiftOrdersStat">٠</b><span>بهذا الشفت</span></article>
+      </div>
+      <div class="page-card shift-actions">
+        <h2>إدارة الشفت</h2>
+        <p>سجّل الكاش الموجود عندك فعلياً واطبع تقرير الإغلاق من هنا.</p>
+        <button class="primary" id="closeShiftReport">إغلاق الشفت وطباعة التقرير</button>
+      </div>
+      <div class="page-card">
+        <div class="section-heading"><div><p>أرشيف</p><h2>سجل الشفتات السابقة</h2></div></div>
+        <div id="shiftHistoryList" class="orders-list"></div>
+      </div>
+    </section>
+
+    <section id="reports" class="page">
+      <div class="stats">
+        <article><small>مبيعات اليوم</small><b id="salesStat">٠ د.ع</b><span>من الطلبات المسددة</span></article>
+        <article><small>عدد الطلبات</small><b id="ordersStat">٠</b><span>مكتملة لحد هسه</span></article>
+        <article><small>متوسط الطلب</small><b id="avgStat">٠ د.ع</b><span>مؤشر صحي للشفت</span></article>
+      </div>
+      <div class="page-card chart-card">
+        <div class="section-heading"><div><p>نظرة سريعة</p><h2>المبيعات حسب الساعة</h2></div></div>
+        <div class="chart" id="chart"></div>
+      </div>
+    </section>
+
+    <section id="settings" class="page">
+      <div class="page-card settings">
+        <h2>إعدادات المقهى</h2>
+        <label>اسم المقهى<input id="cafeName" value="قهوة يوسف"></label>
+        <label>نسبة الخدمة<input id="serviceRate" type="number" value="5" min="0" max="30"></label>
+        <button class="primary" id="saveSettings">حفظ التغييرات</button>
+      </div>
+    </section>
+  </main>
+</div>
+<dialog id="modal"><form method="dialog" id="modalForm"><button class="close" value="cancel">×</button><div id="modalBody"></div></form></dialog>
+<div id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
